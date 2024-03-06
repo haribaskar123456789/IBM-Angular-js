@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="healthApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Health and Wellness To-Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+          
+            background-image: url("pexels-puwadon-sangngern-5340280.jpg");
+            background-size: cover;
+            
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .task.completed {
+            background-color: #e0e0e0;
+            text-decoration: line-through;
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .info h2 {
+            margin-top: 0;
+        }
+
+        .todo-button {
+            background-color: #65e6b9; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor:progress;
+            border-radius: 4px;
+        }
+        text{
+            font-size: x-small;
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div ng-controller="TodoController as todoCtrl">
+        <h1>Todo List</h1>
+        <form ng-submit="todoCtrl.addTodo()">
+            <input type="text" ng-model="todoCtrl.newTodo" placeholder="Add new todo" required>
+            <button class="todo-button" type="submit">Add</button>
+        </form>
+        <ul>
+            <li ng-repeat="todo in todoCtrl.todos">
+                <input type="checkbox" ng-model="todo.completed" ng-change="todoCtrl.toggleCompleted(todo)">
+                <span ng-class="{'completed': todo.completed}">{{ todo.text }}</span>
+                <button class="todo-button" ng-click="todoCtrl.removeTodo(todo)">Remove</button>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="container" ng-controller="HealthController as healthCtrl">
+        <h1>Health and Wellness To-Do List</h1>
+
+        <h2>Tasks:</h2>
+        <ul class="task-list">
+            <li ng-repeat="task in healthCtrl.tasks" ng-class="{ 'task': true, 'completed': task.completed }">
+                <input type="checkbox" ng-model="task.completed" ng-change="healthCtrl.toggleTask(task)">
+                <span>{{ task.name }}</span>
+            </li>
+        </ul>
+
+        <div class="info">
+            <h2>Health Necessity:</h2>
+            <p>It is essential to maintain a healthy lifestyle to ensure overall well-being. This includes eating a balanced diet, staying hydrated, getting regular exercise, and prioritizing mental health.</p>
+            
+            <h2>Recommended Daily Intake:</h2>
+            <p>Recommended daily intake varies based on factors such as age, gender, and activity level. However, a general guideline includes:</p>
+            <ul>
+                <li>5 servings of fruits and vegetables</li>
+                <li>8 glasses of water</li>
+                <li>2 servings of protein</li>
+                <li>3 servings of dairy or dairy alternatives</li>
+                <li>Whole grains</li>
+            </ul>
+            
+            <h2>Importance of Exercises:</h2>
+            <p>Regular exercise is crucial for maintaining physical fitness, improving mental health, and preventing chronic diseases. Aim for at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous activity per week, along with muscle-strengthening exercises on two or more days per week.</p>
+        </div>
+    </div>
+
+    <script>
+
+angular.module('todoApp', [])
+            .controller('TodoController', function() {
+                var self = this;
+                self.todos = [
+                    { text: 'Learn AngularJS', completed: false },
+                    { text: 'Build a todo app', completed: false }
+                ];
+
+                self.addTodo = function() {
+                    if (self.newTodo.trim() !== '') {
+                        self.todos.push({ text: self.newTodo, completed: false });
+                        self.newTodo = ''; // Clear input after adding
+                    }
+                };
+
+                self.removeTodo = function(todo) {
+                    var index = self.todos.indexOf(todo);
+                    if (index !== -1) {
+                        self.todos.splice(index, 1);
+                    }
+                };
+
+                self.toggleCompleted = function(todo) {
+                    todo.completed = !todo.completed;
+                };
+            });
+
+            
+        angular.module('healthApp', [])
+            .controller('HealthController', function() {
+                var self = this;
+
+                self.tasks = [
+                    { name: 'Eat 5 servings of fruits and vegetables', completed: false },
+                    { name: 'Drink 8 glasses of water', completed: false },
+                    { name: 'Exercise for 30 minutes', completed: false }
+                ];
+
+                self.toggleTask = function(task) {
+                    task.completed = !task.completed;
+                };
+            });
+    </script>
+</body>
+</html>

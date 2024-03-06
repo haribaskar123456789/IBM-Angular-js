@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ProductCatalogApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .filters {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product {
+            width: 200px;
+            margin: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .product p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body ng-controller="CatalogController">
+    <h1>Product Catalog</h1>
+    <div class="filters">
+        <select ng-model="selectedCategory">
+            <option value="">All Categories</option>
+            <option ng-repeat="category in categories" value="{{category}}">{{category}}</option>
+        </select>
+    </div>
+    <div class="products">
+        <div class="product" ng-repeat="product in filteredProducts">
+            <img ng-src="{{product.image}}" alt="{{product.name}}">
+            <h3>{{product.name}}</h3>
+            <p>Category: {{product.category}}</p>
+            <p>Price: ${{product.price}}</p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('ProductCatalogApp', [])
+            .controller('CatalogController', function ($scope) {
+                $scope.categories = ['Electronics', 'Clothing', 'Home Decor'];
+                $scope.products = [
+                    { name: 'Laptop', category: 'Electronics', price: 999.99, image: 'https://images.pexels.com/photos/40185/mac-freelancer-macintosh-macbook-40185.jpeg?auto=compress&cs=tinysrgb&w=600' },
+                    { name: 'T-shirt', category: 'Clothing', price: 19.99, image: 'https://images.pexels.com/photos/2294342/pexels-photo-2294342.jpeg?auto=compress&cs=tinysrgb&w=600' },
+                    { name: 'Sofa', category: 'Home Decor', price: 499.99, image: 'https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=600' },
+                    { name: 'Smartphone', category: 'Electronics', price: 599.99, image: 'https://images.pexels.com/photos/1693627/pexels-photo-1693627.jpeg?auto=compress&cs=tinysrgb&w=600' },
+                    { name: 'Jeans', category: 'Clothing', price: 29.99, image: 'https://images.pexels.com/photos/603022/pexels-photo-603022.jpeg?auto=compress&cs=tinysrgb&w=600' },
+                    { name: 'Curtains', category: 'Home Decor', price: 39.99, image: 'https://images.pexels.com/photos/910458/pexels-photo-910458.jpeg?auto=compress&cs=tinysrgb&w=600' }
+                ];
+
+                $scope.selectedCategory = '';
+
+                $scope.$watch('selectedCategory', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        $scope.filteredProducts = $scope.selectedCategory ? $scope.products.filter(product => product.category === newValue) : $scope.products;
+                    }
+                });
+
+                $scope.filteredProducts = $scope.products;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Quiz App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .options input[type="radio"] {
+            margin-right: 5px;
+        }
+        .score {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .submit-btn {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body ng-controller="QuizController">
+    <div class="container">
+        <h2>Interactive Quiz</h2>
+        <div ng-repeat="question in questions">
+            <div class="question">{{ question.text }}</div>
+            <div class="options">
+                <label ng-repeat="option in question.options">
+                    <input type="radio" ng-model="userAnswers[$parent.$index]" ng-value="option">{{ option }}
+                </label>
+            </div>
+        </div>
+        <div class="score" ng-show="showScore">Your score: {{ score }}</div>
+        <button class="submit-btn" ng-click="calculateScore()" ng-show="!showScore">Submit</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script>
+        angular.module('quizApp', [])
+            .controller('QuizController', function($scope) {
+                $scope.questions = [
+                    {
+                        text: "What is the capital of France?",
+                        options: ["Paris", "London", "Berlin"],
+                        correctAnswer: "Paris"
+                    },
+                    {
+                        text: "Who wrote 'Romeo and Juliet'?",
+                        options: ["William Shakespeare", "Charles Dickens", "Jane Austen"],
+                        correctAnswer: "William Shakespeare"
+                    },
+                    {
+                        text: "What is the chemical symbol for gold?",
+                        options: ["Au", "Ag", "Fe"],
+                        correctAnswer: "Au"
+                    }
+                ];
+
+                $scope.userAnswers = {};
+                $scope.score = 0;
+                $scope.showScore = false;
+
+                $scope.calculateScore = function() {
+                    $scope.score = 0;
+                    for (var i = 0; i < $scope.questions.length; i++) {
+                        if ($scope.userAnswers[i] === $scope.questions[i].correctAnswer) {
+                            $scope.score++;
+                        }
+                    }
+                    $scope.showScore = true;
+                };
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            background-image: url("pexels-puwadon-sangngern-5340280.jpg");
+            background-size: cover;
+            
+        }
+
+        .todo-button {
+            background-color: #65e6b9; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor:progress;
+            border-radius: 4px;
+        }
+        text{
+            font-size: x-small;
+            font-family: 'Times New Roman', Times, serif;
+        }
+       
+    </style>
+</head>
+<body>
+    
+    <div ng-controller="TodoController as todoCtrl">
+        <h1>Todo List</h1>
+        <form ng-submit="todoCtrl.addTodo()">
+            <input type="text" ng-model="todoCtrl.newTodo" placeholder="Add new todo" required>
+            <button class="todo-button" type="submit">Add</button>
+        </form>
+        <ul>
+            <li ng-repeat="todo in todoCtrl.todos">
+                <input type="checkbox" ng-model="todo.completed" ng-change="todoCtrl.toggleCompleted(todo)">
+                <span ng-class="{'completed': todo.completed}">{{ todo.text }}</span>
+                <button class="todo-button" ng-click="todoCtrl.removeTodo(todo)">Remove</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        angular.module('todoApp', [])
+            .controller('TodoController', function() {
+                var self = this;
+                self.todos = [
+                    { text: 'Learn AngularJS', completed: false },
+                    { text: 'Build a todo app', completed: false }
+                ];
+
+                self.addTodo = function() {
+                    if (self.newTodo.trim() !== '') {
+                        self.todos.push({ text: self.newTodo, completed: false });
+                        self.newTodo = ''; // Clear input after adding
+                    }
+                };
+
+                self.removeTodo = function(todo) {
+                    var index = self.todos.indexOf(todo);
+                    if (index !== -1) {
+                        self.todos.splice(index, 1);
+                    }
+                };
+
+                self.toggleCompleted = function(todo) {
+                    todo.completed = !todo.completed;
+                };
+            });
+    </script>
+    
+</body>
+</html>

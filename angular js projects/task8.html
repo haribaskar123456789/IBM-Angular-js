@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            background-image: url("health&wealth.jpg");
+            background-size: cover;
+            
+        }
+
+        .todo-button {
+            background-color: #de2c2c; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor:progress;
+            border-radius: 4px;
+        }
+        text{
+            font-size:x-large;
+            font-family: 'Times New Roman';
+        }
+       h2,li{
+        font-size: larger;
+         font-family: Georgia, 'Times New Roman', Times, serif;
+       }
+
+       p{
+        font-family: Arial, Helvetica, sans-serif;
+       }
+       
+    </style>
+</head>
+<body>
+    <div ng-controller="TodoController as todoCtrl" style="border: 5px solid black; width:400px ; border-radius: 5%; background-color: aquamarine; ">
+        <h1>Todo List</h1>
+        <form ng-submit="todoCtrl.addTodo()">
+            <input type="text" ng-model="todoCtrl.newTodo" placeholder="Add new todo" required>
+            <button type="submit">Add</button>
+        </form>
+        <ul>
+            <li ng-repeat="todo in todoCtrl.todos">
+                <input type="checkbox" ng-model="todo.completed" ng-change="todoCtrl.toggleCompleted(todo)">
+                <span ng-class="{'completed': todo.completed}">{{ todo.text }}</span>
+                <button ng-click="todoCtrl.removeTodo(todo)">Remove</button>
+            </li>
+        </ul>
+    </div>
+
+    
+
+
+    <div class="container" ng-controller="HealthController as healthCtrl">
+         <center> <h1 style=" background-color: rgb(188, 39, 204); ">Daily Morning To-Do List</h1> </center>
+
+      <hr style="color: blueviolet;">  <h2>Tasks:</h2> </hr>
+        <ul class="task-list">
+            <li ng-repeat="task in healthCtrl.tasks" ng-class="{ 'task': true, 'completed': task.completed }">
+                <input type="checkbox" ng-model="task.completed" ng-change="healthCtrl.toggleTask(task)">
+                <span>{{ task.name }}</span>
+            </li>
+        </ul>
+
+        <div class="info">
+            <hr style="color: blueviolet;">  <h2>Health Necessity:</h2> </hr>
+            <p>It is essential to maintain a healthy lifestyle to ensure overall well-being. This includes eating a balanced diet, staying hydrated, getting regular exercise, and prioritizing mental health.</p>
+            
+            <hr style="color: blueviolet;"> <h2>Recommended Daily Intake:</h2> </hr>
+            <p>Recommended daily intake varies based on factors such as age, gender, and activity level. However, a general guideline includes:</p>
+            <ul>
+                <li>5 servings of fruits and vegetables</li>
+                <li>8 glasses of water</li>
+                <li>2 servings of protein</li>
+                <li>3 servings of dairy or dairy alternatives</li>
+                <li>Whole grains</li>
+            </ul>
+            
+            <hr style="color: blueviolet;"> <h2>Importance of Exercises:</h2> </hr>
+            <p>Regular exercise is crucial for maintaining physical fitness, improving mental health, and preventing chronic diseases. Aim for at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous activity per week, along with muscle-strengthening exercises on two or more days per week.</p>
+        </div>
+    </div>
+
+    <script>
+
+angular.module('todoApp', [])
+            .controller('TodoController', function() {
+                var self = this;
+                self.todos = [
+                    { text: 'Learn AngularJS', completed: false },
+                    { text: 'Build a todo app', completed: false }
+                ];
+
+                self.addTodo = function() {
+                    if (self.newTodo.trim() !== '') {
+                        self.todos.push({ text: self.newTodo, completed: false });
+                        self.newTodo = ''; // Clear input after adding
+                    }
+                };
+
+                self.removeTodo = function(todo) {
+                    var index = self.todos.indexOf(todo);
+                    if (index !== -1) {
+                        self.todos.splice(index, 1);
+                    }
+                };
+
+                self.toggleCompleted = function(todo) {
+                    todo.completed = !todo.completed;
+                };
+            });
+
+            
+        angular.module('healthApp', [])
+            .controller('HealthController', function() {
+                var self = this;
+
+                self.tasks = [
+                    { name: 'Eat 5 servings of fruits and vegetables', completed: false },
+                    { name: 'Drink 8 glasses of water', completed: false },
+                    { name: 'Exercise for 30 minutes', completed: false }
+                ];
+
+                self.toggleTask = function(task) {
+                    task.completed = !task.completed;
+                };
+            });
+    
+    
+    
+           
+        </script>
+    </body>
+    </html>

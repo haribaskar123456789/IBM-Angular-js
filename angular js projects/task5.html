@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="authApp">
+<head>
+    <meta charset="UTF-8">
+    <title>User Authentication System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-group input[type="text"], .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body ng-controller="AuthController">
+    <div class="container">
+        <h2>User Authentication</h2>
+
+        <div ng-show="!loggedIn">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" ng-model="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" ng-model="password">
+            </div>
+            <div class="form-group">
+                <button ng-click="login()">Log In</button>
+            </div>
+            <div class="form-group">
+                <button ng-click="signup()">Sign Up</button>
+            </div>
+            <div class="error-message" ng-show="errorMessage">{{ errorMessage }}</div>
+            <div class="success-message" ng-show="successMessage">{{ successMessage }}</div>
+        </div>
+
+        <div ng-show="loggedIn">
+            <h3>Welcome, {{ user.email }}!</h3>
+            <button ng-click="logout()">Log Out</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script>
+        angular.module('authApp', [])
+            .controller('AuthController', function($scope) {
+                $scope.loggedIn = false;
+                $scope.user = {};
+                $scope.errorMessage = '';
+                $scope.successMessage = '';
+
+                $scope.login = function() {
+                    // Here you would implement the logic for authentication, for simplicity we assume successful login
+                    $scope.loggedIn = true;
+                    $scope.user.email = $scope.email;
+                    $scope.errorMessage = '';
+                    $scope.successMessage = 'Logged in successfully!';
+                };
+
+                $scope.signup = function() {
+                    // Here you would implement the logic for user registration, for simplicity we assume successful registration
+                    $scope.loggedIn = true;
+                    $scope.user.email = $scope.email;
+                    $scope.errorMessage = '';
+                    $scope.successMessage = 'Signed up successfully!';
+                };
+
+                $scope.logout = function() {
+                    $scope.loggedIn = false;
+                    $scope.user = {};
+                    $scope.email = '';
+                    $scope.password = '';
+                };
+            });
+    </script>
+</body>
+</html>
