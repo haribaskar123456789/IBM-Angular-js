@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Details</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .education, .skills {
+    margin-bottom: 20px;
+  }
+  
+  .education h3, .skills h3 {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .education p, .skills p {
+    margin: 5px 0;
+    color: #777;
+  }
+  
+  .skills ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .skills ul li {
+    margin-bottom: 5px;
+    color: #777;
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      margin: 10px;
+      padding: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Student Details</h2>
+  <div class="education">
+    <h3>Education</h3>
+    <p>10th Standard - Don Bosco Higher Secondary School</p>
+    <p>12th Standard - Don Bosco Higher Secondary School</p>
+    <p>Bachelor of Science in Computer Science - Don Bosco College, Yelagiri, 2020-2024</p>
+  </div>
+  <div class="skills">
+    <h3>Skills</h3>
+    <ul>
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JavaScript (ES6+)</li>
+      <li>React.js</li>
+      <li>Vue.js</li>
+      <li>Angular</li>
+      <li>Bootstrap</li>
+      <li>Sass/Less</li>
+      <li>Responsive Web Design</li>
+      <li>Git/GitHub</li>
+      <li>Webpack</li>
+      <li>RESTful APIs</li>
+      <li>JSON</li>
+      <li>Node.js</li>
+      <li>Express.js</li>
+      <li>MongoDB</li>
+      <li>SQL/MySQL</li>
+      <li>Python</li>
+      <li>Java</li>
+      <li>C/C++</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  // Add some interactive elements with JavaScript (e.g., hover effects)
+  const skillsList = document.querySelectorAll('.skills li');
+  
+  skillsList.forEach(skill => {
+    skill.addEventListener('mouseover', () => {
+      skill.style.color = '#333';
+      skill.style.fontWeight = 'bold';
+    });
+  
+    skill.addEventListener('mouseout', () => {
+      skill.style.color = '#777';
+      skill.style.fontWeight = 'normal';
+    });
+  });
+</script>
+
+</body>
+</html>

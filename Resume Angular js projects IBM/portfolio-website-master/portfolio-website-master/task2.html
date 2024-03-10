@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ImageGalleryApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FEFCAE;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .image-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-item:hover .image-details {
+            opacity: 1;
+        }
+
+        .image-details h3 {
+            margin: 0;
+        }
+
+        .image-details p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+   <marquee ><h1 style="text-align: center;"><b>INTERACTIVE IMAGE GALLERY</b></h1></marquee> 
+    <div class="image-gallery" ng-controller="GalleryController">
+        <div class="image-item" ng-repeat="image in images" ng-click="showDetails(image)">
+            <img ng-src="{{image.src}}" alt="{{image.title}}">
+            <div class="image-details">
+                <div>
+                    <h3>{{image.title}}</h3>
+                    <p>{{image.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('ImageGalleryApp', [])
+            .controller('GalleryController', function ($scope) {
+                $scope.images = [
+                    {
+                        src: 'https://images.pexels.com/photos/4770720/pexels-photo-4770720.jpeg?auto=compress&cs=tinysrgb&w=600',
+                        title: 'Game 1',
+                        description: 'cricket'
+                    },
+                    {
+                        src: 'https://images.pexels.com/photos/3684122/pexels-photo-3684122.jpeg?auto=compress&cs=tinysrgb&w=600',
+                        title: 'Game 2',
+                        description: ' Football'
+                    },
+                    {
+                        src: 'https://images.pexels.com/photos/945471/pexels-photo-945471.jpeg?auto=compress&cs=tinysrgb&w=600',
+                        title: 'Game 3',
+                        description: 'Baseket ball'
+                    },
+                    {
+                        src: 'https://images.pexels.com/photos/1263426/pexels-photo-1263426.jpeg?auto=compress&cs=tinysrgb&w=600',
+                        title: 'Game 4',
+                        description: 'Volly ball'
+                    }
+                ];
+
+                $scope.showDetails = function (image) {
+                    alert('Title: ' + image.title + '\nDescription: ' + image.description);
+                };
+            });
+    </script>
+</body>
+</html>

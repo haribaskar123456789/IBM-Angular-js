@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="portfolioApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        main {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body ng-controller="MainController">
+
+    <header>
+        <h1>{{ heading }}</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" ng-click="navigateTo('home')">Home</a></li>
+            <li><a href="#" ng-click="navigateTo('about')">About</a></li>
+            <li><a href="#" ng-click="navigateTo('portfolio')">Portfolio</a></li>
+            <li><a href="#" ng-click="navigateTo('contact')">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div ng-show="currentPage === 'home'">
+            <h2>Welcome to My Portfolio</h2>
+            <p>This is a showcase of my work and skills.</p>
+        </div>
+        <div ng-show="currentPage === 'about'">
+            <h2>About Me</h2>
+            <p>I'm a passionate web developer with expertise in AngularJS, HTML, CSS, and JavaScript.</p>
+        </div>
+        <div ng-show="currentPage === 'portfolio'">
+            <h2>Portfolio</h2>
+            <ul>
+                <li ng-repeat="project in projects">{{ project.name }} - {{ project.description }}</li>
+            </ul>
+        </div>
+        <div ng-show="currentPage === 'contact'">
+            <h2>Contact Me</h2>
+            <p>Email: example@example.com</p>
+            <p>Phone: 123-456-7890</p>
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var app = angular.module('portfolioApp', []);
+
+        app.controller('MainController', function($scope) {
+            $scope.heading = 'My Portfolio';
+            $scope.currentPage = 'home';
+            $scope.projects = [
+                { name: 'Project 1', description: 'Description of Project 1' },
+                { name: 'Project 2', description: 'Description of Project 2' },
+                { name: 'Project 3', description: 'Description of Project 3' }
+            ];
+
+            $scope.navigateTo = function(page) {
+                $scope.currentPage = page;
+            };
+        });
+    </script>
+</body>
+</html>
